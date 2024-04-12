@@ -6,6 +6,11 @@ int main()
 	sf::CircleShape shape(100.f);
 	shape.setFillColor(sf::Color::Green);
 
+	sf::Clock clock;
+	const int maxFPS = 60;
+	const float fixedTimeStep = 1.0f / (maxFPS ? static_cast<double>(maxFPS) : 1.0f);
+	float accumulatedTime = 0.0f;
+
 	while (window.isOpen())
 	{
 		sf::Event event;
