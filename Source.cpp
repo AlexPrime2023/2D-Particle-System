@@ -1,10 +1,19 @@
 #include <SFML/Graphics.hpp>
+#include "ParticleSystem.h"
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(200, 200), "Test SFML");
-	sf::CircleShape shape(100.f);
-	shape.setFillColor(sf::Color::Green);
+	sf::RenderWindow window(sf::VideoMode(800, 600), "Test SFML");
+
+	ParticleSystem particleSystem(1000);
+
+	particleSystem.setEmitterPosition(sf::Vector2f(window.getSize().x / 2.0f, window.getSize().y / 2.0f));
+	particleSystem.setEmissionRate(100.0f);
+	particleSystem.setEmitterRadius(100.0f);
+	particleSystem.setParticleLifetime(5.0f);
+	particleSystem.setParticleSize(5.0f);
+	particleSystem.setParticleSpeed(50.0f);
+	particleSystem.setParticleRotationSpeed(0.0f);
 
 	sf::Clock clock;
 	const int maxFPS = 60;
@@ -20,8 +29,17 @@ int main()
 				window.close();
 		}
 
+		float deltaTime = clock.restart().asSeconds();
+		accumulatedTime += deltaTime;
+
+		while (accumulatedTime >= fixedTimeStep) {
+			// Update game
+			particleSystem.update(fixedTimeStep);
+			accumulatedTime -= fixedTimeStep;
+		}
+
 		window.clear();
-		window.draw(shape);
+		particleSystem.draw(window);
 		window.display();
 	}
 
