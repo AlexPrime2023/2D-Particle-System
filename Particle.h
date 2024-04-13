@@ -51,6 +51,8 @@ private:
     float m_startParticleSize;
     sf::Vector2f m_startForce;
 
+    float m_curveTime;
+
     sf::Color m_easedColor;
 
     std::vector<sf::Vector2f> m_trail;
