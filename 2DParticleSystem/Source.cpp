@@ -18,17 +18,23 @@ int main()
 	//particleSystem.setDrawTrail(true);
 	//particleSystem.setTrailSize(20);
 
-	//particleSystem.setEasingCurveParticleSize(std::move(std::make_shared<LinearEasing>(LinearEasing())));
+	particleSystem.setEasingCurveParticleSize(std::move(std::make_shared<LinearEasing>(LinearEasing())));
+	particleSystem.setEasingCurveAplha(std::move(std::make_shared<LinearEasing>(LinearEasing())));
 	particleSystem.setEasingCurveRGB(std::move(std::make_shared<LinearEasing>(LinearEasing())));
 	particleSystem.setEasingCurveForce(std::move(std::make_shared<LinearEasing>(LinearEasing())));
 
-	particleSystem.setStartColor(sf::Color::Red);
-	particleSystem.setEndColor(sf::Color::Green);
+	sf::Color startColor = sf::Color::Red;
+	startColor.a = 255;
+	particleSystem.setStartColor(startColor);
+
+	sf::Color endColor = sf::Color::Green;
+	endColor.a = 0;
+	particleSystem.setEndColor(endColor);
 
 	//particleSystem.setColor(sf::Color::Cyan);
 
-	particleSystem.setForce(sf::Vector2f(5.0f, 2.5f));
-	particleSystem.setParticleMass(15.0f);
+	//particleSystem.setForce(sf::Vector2f(5.0f, 2.5f));
+	//particleSystem.setParticleMass(15.0f);
 
 	sf::Clock clock;
 	const int maxFPS = 60;
