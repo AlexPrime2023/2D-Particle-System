@@ -1,6 +1,6 @@
 #include "Particle.h"
 
-#include <cmath>
+#include "MathUtils.h"
 #include <iostream>
 
 Particle::Particle(float x, float y, const ParticleSettings& settings) :
@@ -112,8 +112,7 @@ void Particle::update(float dt)
 	}
 
 	// Update velocity with force proportional to particle mass
-	// TODO Fuzzy Compare
-	if ((m_force.x != 0.0f) || (m_force.y != 0.0f))
+	if (MathUtils::isNumbersAreSameFuzzyCompare(m_force.x, 0.0f) || MathUtils::isNumbersAreSameFuzzyCompare(m_force.y, 0.0f))
 		m_velocity += m_force / (m_particleMass > 0.0f ? m_particleMass : 1.0f);
 
 	m_position += m_velocity * dt;

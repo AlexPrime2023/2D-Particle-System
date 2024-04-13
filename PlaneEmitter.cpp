@@ -9,7 +9,7 @@ sf::Vector2f PlaneEmitter::calculatePosition()
 
 sf::Vector2f PlaneEmitter::calculateVelocity()
 {
-    m_angle = (std::rand() % 360) * 3.14159f / 180.0f;
+    m_angle = MathUtils::degToRad(std::rand() % 360);
     return sf::Vector2f(std::cos(m_angle), std::sin(m_angle));
 }
 

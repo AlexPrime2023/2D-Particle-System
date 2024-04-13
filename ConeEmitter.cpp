@@ -1,8 +1,8 @@
 #include "ConeEmitter.h"
 
 ConeEmitter::ConeEmitter(float startAngle, float endAngle) :
-	m_startAngle(startAngle * 3.14159f / 180.0f),
-	m_endAngle(endAngle * 3.14159f / 180.0f),
+	m_startAngle(MathUtils::degToRad(startAngle)),
+	m_endAngle(MathUtils::degToRad(endAngle)),
 	m_coneAngle(0.0f)
 {
 }

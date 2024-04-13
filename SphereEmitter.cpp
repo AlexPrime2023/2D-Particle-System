@@ -7,8 +7,9 @@ sf::Vector2f SphereEmitter::calculatePosition()
 
 sf::Vector2f SphereEmitter::calculateVelocity()
 {
-    float theta = (std::rand() % 360) * 3.14159f / 180.0f;
-    float phi = (std::rand() % 180) * 3.14159f / 180.0f;
+    float theta = MathUtils::degToRad(std::rand() % 360);
+    float phi = MathUtils::degToRad(std::rand() % 180);
+
     float x = m_emitterRadius * std::sin(phi) * std::cos(theta);
     float y = m_emitterRadius * std::sin(phi) * std::sin(theta);
 
