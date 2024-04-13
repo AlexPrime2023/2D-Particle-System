@@ -5,6 +5,8 @@
 
 #include "Particle.h"
 
+#include "Emitter.h"
+
 class ParticleSystem
 {
 public:
@@ -22,9 +24,9 @@ public:
 	void draw(sf::RenderWindow& window) const;
 
 public:
-	inline void setEmitterPosition(const sf::Vector2f& emiterPosition) { m_emitterPosition = emiterPosition; };
+	inline void setEmitterPosition(const sf::Vector2f& emiterPosition) { m_emitterPosition = emiterPosition; m_emitter->setEmiterPosition(emiterPosition); };
 	inline void setEmissionRate(float emissionRate) { m_emissionRate = emissionRate; };
-	inline void setEmitterRadius(float emitterRadius) { m_emitterRadius = emitterRadius; };
+	inline void setEmitterRadius(float emitterRadius) { m_emitterRadius = emitterRadius; m_emitter->setEmiterRadius(emitterRadius); };
 	inline void setParticleLifetime(float particleLifetime) { m_particleLifetime = particleLifetime; };
 	inline void setParticleSize(float particleSize) { m_particleSize = particleSize; };
 	inline void setParticleSpeed(float particleSpeed) { m_particleSpeed = particleSpeed; };
@@ -45,4 +47,6 @@ private:
 	float m_particleSize;
 	float m_particleSpeed;
 	float m_particleRotationSpeed;
+
+	std::shared_ptr<Emitter> m_emitter;
 };

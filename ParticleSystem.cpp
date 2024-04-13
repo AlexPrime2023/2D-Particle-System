@@ -1,6 +1,11 @@
 #include "ParticleSystem.h"
 #include <SFML/Graphics/CircleShape.hpp>
 
+// TODO To another file
+#include "SphereEmitter.h"
+#include "ConeEmitter.h"
+#include "PlaneEmitter.h"
+
 ParticleSystem::ParticleSystem(unsigned int maxParticles) :
     m_maxParticles(maxParticles),
     m_color(sf::Color::White),
@@ -11,7 +16,10 @@ ParticleSystem::ParticleSystem(unsigned int maxParticles) :
     m_particleSize(0.0f),
     m_particleSpeed(0.0f),
     m_particleRotationSpeed(0.0f)
-{}
+{
+    // Default sphere emitter
+    m_emitter = std::make_shared<SphereEmitter>(SphereEmitter());
+}
 
 void ParticleSystem::update(float dt)
 {
@@ -21,17 +29,16 @@ void ParticleSystem::update(float dt)
     {
         if (m_particles.size() < m_maxParticles)
         {
-            sf::Vector2f position = m_emitterPosition;
+            if (m_emitter)
+            {
+                const sf::Vector2f position = m_emitter->calculatePosition();
+                const sf::Vector2f velocity = m_emitter->calculateVelocity();
+                const float angle = m_emitter->calculateAngle();
 
-            float angle = (std::rand() % 360) * 3.14159f / 180.0f;
-            float speed = m_particleSpeed;
-
-            sf::Vector2f velocity(std::cos(angle), std::sin(angle));
-            velocity *= speed;
-
-            ParticleSettings settings{ m_particleLifetime, m_particleSize, speed, angle, m_particleRotationSpeed, m_color };
-            m_particles.push_back({ position.x, position.y, settings });
-            m_particles.back().setVelocity(velocity);
+                ParticleSettings settings{ m_particleLifetime, m_particleSize, m_particleSpeed, angle, m_particleRotationSpeed, m_color };
+                m_particles.push_back({ position.x, position.y, settings });
+                m_particles.back().setVelocity(velocity * m_particleSpeed);
+            }
         }
     }
 
