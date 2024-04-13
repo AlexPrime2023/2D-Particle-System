@@ -15,6 +15,9 @@ int main()
 	particleSystem.setParticleSpeed(50.0f);
 	particleSystem.setParticleRotationSpeed(0.0f);
 
+	particleSystem.setDrawTrail(true);
+	particleSystem.setTrailSize(20);
+
 	particleSystem.setColor(sf::Color::Red);
 
 	sf::Clock clock;

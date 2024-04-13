@@ -33,6 +33,9 @@ public:
 	inline void setParticleRotationSpeed(float particleRotationSpeed) { m_particleRotationSpeed = particleRotationSpeed; };
 	inline void setColor(const sf::Color& color) { m_color = color; };
 
+	inline void setDrawTrail(bool isDrawTrail) { m_isDrawTrail = isDrawTrail; }
+	inline void setTrailSize(int trailSize) { m_trailSize = trailSize; }
+
 private:
 	unsigned int m_maxParticles;
 
@@ -47,6 +50,9 @@ private:
 	float m_particleSize;
 	float m_particleSpeed;
 	float m_particleRotationSpeed;
+
+	bool m_isDrawTrail;
+	int m_trailSize;
 
 	std::shared_ptr<Emitter> m_emitter;
 };

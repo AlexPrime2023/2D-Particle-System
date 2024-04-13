@@ -4,6 +4,7 @@
 
 #include "ParticleSettings.h"
 
+#include <vector>
 
 class Particle
 {
@@ -23,6 +24,7 @@ public:
 
 public:
     inline bool isAlive() const { return m_lifetime > 0.0f; };
+    inline bool isDrawTail() const { return m_isDrawTrail; };
 
 public:
     inline sf::Vector2f velocity() const { return m_velocity; };
@@ -31,6 +33,9 @@ public:
     inline sf::Vector2f position() const { return m_position; };
 
     inline sf::Color color() const { return m_color; };
+
+    inline int trailSize() const { return m_trail.size(); };
+    inline sf::Vector2f trailIndex(int index) const { return m_trail[index]; };
 
 private:
     // Copy-swap idiom
@@ -43,4 +48,9 @@ private:
     sf::Color m_color;
 
     float m_rotationSpeed;
+
+    bool m_isDrawTrail;
+    int m_trailSize;
+
+    std::vector<sf::Vector2f> m_trail;
 };
