@@ -20,8 +20,9 @@ struct ParticleSettings {
     std::shared_ptr<EasingCurve> particleSizeCurve;
     std::shared_ptr<EasingCurve> rgbCurve;
     std::shared_ptr<EasingCurve> alphaCurve;
+    std::shared_ptr<EasingCurve> forceCurve;
 
-    ParticleSettings(float lifetime, float size, float speed, float angle, float rotationSpeed, sf::Vector2f force, float particleMass, const sf::Color& startColor, const sf::Color& endColor, bool isDrawTrail, int trailSize, std::shared_ptr<EasingCurve> particleSizeCurve, std::shared_ptr<EasingCurve> rgbCurve, std::shared_ptr<EasingCurve> alphaCurve)
+    ParticleSettings(float lifetime, float size, float speed, float angle, float rotationSpeed, sf::Vector2f force, float particleMass, const sf::Color& startColor, const sf::Color& endColor, bool isDrawTrail, int trailSize, std::shared_ptr<EasingCurve> particleSizeCurve, std::shared_ptr<EasingCurve> rgbCurve, std::shared_ptr<EasingCurve> alphaCurve, std::shared_ptr<EasingCurve> forceCurve)
         : lifetime(lifetime),
         size(size),
         speed(speed),
@@ -35,6 +36,7 @@ struct ParticleSettings {
         trailSize(trailSize),
         particleSizeCurve(particleSizeCurve),
         rgbCurve(rgbCurve),
-        alphaCurve(alphaCurve)
+        alphaCurve(alphaCurve),
+        forceCurve(forceCurve)
     {}
 };

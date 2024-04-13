@@ -45,6 +45,7 @@ public:
 	inline void setEasingCurveParticleSize(std::shared_ptr<EasingCurve> particleSizeCurve) { m_particleSizeCurve = std::move(particleSizeCurve); };
 	inline void setEasingCurveRGB(std::shared_ptr<EasingCurve> rgbCurve) { m_rgbCurve = std::move(rgbCurve); };
 	inline void setEasingCurveAplha(std::shared_ptr<EasingCurve> alphaCurve) { m_alphaCurve = std::move(alphaCurve); };
+	inline void setEasingCurveForce(std::shared_ptr<EasingCurve> forceCurve) { m_forceCurve = std::move(forceCurve); };
 
 private:
 	unsigned int m_maxParticles;
@@ -73,4 +74,5 @@ private:
 	std::shared_ptr<EasingCurve> m_particleSizeCurve;
 	std::shared_ptr<EasingCurve> m_rgbCurve;
 	std::shared_ptr<EasingCurve> m_alphaCurve;
+	std::shared_ptr<EasingCurve> m_forceCurve;
 };

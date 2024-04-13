@@ -13,6 +13,7 @@ Particle::Particle(float x, float y, const ParticleSettings& settings) :
 	m_easedColor(settings.startColor),
 	m_startLifeTime(settings.lifetime),
 	m_startParticleSize(settings.size),
+	m_startForce(settings.force),
 	m_force(settings.force),
 	m_particleMass(settings.particleMass),
 	m_rotationSpeed(settings.rotationSpeed),
@@ -20,7 +21,8 @@ Particle::Particle(float x, float y, const ParticleSettings& settings) :
 	m_trailSize(settings.trailSize),
 	m_particleSizeCurve(settings.particleSizeCurve),
 	m_rgbCurve(settings.rgbCurve),
-	m_alphaCurve(settings.alphaCurve)
+	m_alphaCurve(settings.alphaCurve),
+	m_forceCurve(settings.forceCurve)
 {
 }
 
@@ -34,6 +36,7 @@ Particle::Particle(const Particle& particle) :
 	m_easedColor(particle.m_startColor),
 	m_startLifeTime(particle.m_startLifeTime),
 	m_startParticleSize(particle.m_startParticleSize),
+	m_startForce(particle.m_startForce),
 	m_force(particle.m_force),
 	m_particleMass(particle.m_particleMass),
 	m_rotationSpeed(particle.m_rotationSpeed),
@@ -41,7 +44,8 @@ Particle::Particle(const Particle& particle) :
 	m_trailSize(particle.m_trailSize),
 	m_particleSizeCurve(particle.m_particleSizeCurve),
 	m_rgbCurve(particle.m_rgbCurve),
-	m_alphaCurve(particle.m_alphaCurve)
+	m_alphaCurve(particle.m_alphaCurve),
+	m_forceCurve(particle.m_forceCurve)
 {
 }
 
@@ -100,6 +104,13 @@ void Particle::update(float dt)
 		m_easedColor.a = static_cast<sf::Uint8>((1.0f - easingFactor) * m_startColor.a + easingFactor * m_endColor.a);
 	}
 
+	if (m_forceCurve)
+	{
+		float t = 1.0f - (m_lifetime / m_startLifeTime);
+		float easingFactor = m_forceCurve->interpolate(t);
+		m_force = m_startForce * easingFactor;
+	}
+
 	// Update velocity with force proportional to particle mass
 	// TODO Fuzzy Compare
 	if ((m_force.x != 0.0f) || (m_force.y != 0.0f))
@@ -119,6 +130,7 @@ void Particle::swap(Particle& particle) noexcept
 	std::swap(m_easedColor, particle.m_easedColor);
 	std::swap(m_startLifeTime, particle.m_startLifeTime);
 	std::swap(m_startParticleSize, particle.m_startParticleSize);
+	std::swap(m_startForce, particle.m_startForce);
 	std::swap(m_force, particle.m_force);
 	std::swap(m_particleMass, particle.m_particleMass);
 	std::swap(m_rotationSpeed, particle.m_rotationSpeed);
@@ -127,4 +139,5 @@ void Particle::swap(Particle& particle) noexcept
 	std::swap(m_particleSizeCurve, particle.m_particleSizeCurve);
 	std::swap(m_rgbCurve, particle.m_rgbCurve);
 	std::swap(m_alphaCurve, particle.m_alphaCurve);
+	std::swap(m_forceCurve, particle.m_forceCurve);
 }

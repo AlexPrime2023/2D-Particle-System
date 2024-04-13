@@ -58,6 +58,7 @@ private:
 
     float m_startLifeTime;
     float m_startParticleSize;
+    sf::Vector2f m_startForce;
 
     float m_rotationSpeed;
 
@@ -69,4 +70,5 @@ private:
     std::shared_ptr<EasingCurve> m_particleSizeCurve;
     std::shared_ptr<EasingCurve> m_rgbCurve;
     std::shared_ptr<EasingCurve> m_alphaCurve;
+    std::shared_ptr<EasingCurve> m_forceCurve;
 };
