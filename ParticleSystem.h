@@ -31,18 +31,24 @@ public:
 	inline void setParticleSize(float particleSize) { m_particleSize = particleSize; };
 	inline void setParticleSpeed(float particleSpeed) { m_particleSpeed = particleSpeed; };
 	inline void setParticleRotationSpeed(float particleRotationSpeed) { m_particleRotationSpeed = particleRotationSpeed; };
-	inline void setColor(const sf::Color& color) { m_color = color; };
+
+	inline void setColor(const sf::Color& color) { m_startColor = color; m_endColor = color; };
+	inline void setStartColor(const sf::Color& startColor) { m_startColor = startColor; };
+	inline void setEndColor(const sf::Color& endColor) { m_endColor = endColor; };
 
 	inline void setDrawTrail(bool isDrawTrail) { m_isDrawTrail = isDrawTrail; }
 	inline void setTrailSize(int trailSize) { m_trailSize = trailSize; }
 
 	inline void setEasingCurveParticleSize(std::shared_ptr<EasingCurve> particleSizeCurve) { m_particleSizeCurve = std::move(particleSizeCurve); };
+	inline void setEasingCurveRGB(std::shared_ptr<EasingCurve> rgbCurve) { m_rgbCurve = std::move(rgbCurve); };
+	inline void setEasingCurveAplha(std::shared_ptr<EasingCurve> alphaCurve) { m_alphaCurve = std::move(alphaCurve); };
 
 private:
 	unsigned int m_maxParticles;
 
 	std::vector<Particle> m_particles;
-	sf::Color m_color;
+	sf::Color m_startColor;
+	sf::Color m_endColor;
 
 	sf::Vector2f m_emitterPosition;
 	float m_emissionRate;
@@ -59,4 +65,6 @@ private:
 	std::shared_ptr<Emitter> m_emitter;
 
 	std::shared_ptr<EasingCurve> m_particleSizeCurve;
+	std::shared_ptr<EasingCurve> m_rgbCurve;
+	std::shared_ptr<EasingCurve> m_alphaCurve;
 };
