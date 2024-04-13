@@ -36,6 +36,9 @@ public:
 	inline void setStartColor(const sf::Color& startColor) { m_startColor = startColor; };
 	inline void setEndColor(const sf::Color& endColor) { m_endColor = endColor; };
 
+	inline void setForce(const sf::Vector2f& force) { m_force = force; };
+	inline void setParticleMass(float particleMass) { m_particleMass = particleMass; };
+
 	inline void setDrawTrail(bool isDrawTrail) { m_isDrawTrail = isDrawTrail; }
 	inline void setTrailSize(int trailSize) { m_trailSize = trailSize; }
 
@@ -49,6 +52,9 @@ private:
 	std::vector<Particle> m_particles;
 	sf::Color m_startColor;
 	sf::Color m_endColor;
+
+	sf::Vector2f m_force;
+	float m_particleMass;
 
 	sf::Vector2f m_emitterPosition;
 	float m_emissionRate;

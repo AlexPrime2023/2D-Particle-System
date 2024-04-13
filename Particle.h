@@ -53,6 +53,9 @@ private:
     sf::Color m_endColor;
     sf::Color m_easedColor;
 
+    sf::Vector2f m_force;
+    float m_particleMass;
+
     float m_startLifeTime;
     float m_startParticleSize;
 

@@ -26,6 +26,9 @@ int main()
 
 	//particleSystem.setColor(sf::Color::Cyan);
 
+	particleSystem.setForce(sf::Vector2f(5.0f, 2.5f));
+	particleSystem.setParticleMass(10.0f);
+
 	sf::Clock clock;
 	const int maxFPS = 60;
 	const float fixedTimeStep = 1.0f / (maxFPS ? static_cast<double>(maxFPS) : 1.0f);

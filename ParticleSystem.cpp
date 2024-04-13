@@ -10,6 +10,8 @@ ParticleSystem::ParticleSystem(unsigned int maxParticles) :
     m_maxParticles(maxParticles),
     m_startColor(sf::Color::White),
     m_endColor(sf::Color::White),
+    m_force(sf::Vector2f(0.0f, 0.0f)),
+    m_particleMass(1.0f),
     m_emitterPosition(0.0f, 0.0f),
     m_emissionRate(0.0f),
     m_emitterRadius(0.0f),
@@ -38,7 +40,7 @@ void ParticleSystem::update(float dt)
                 const sf::Vector2f velocity = m_emitter->calculateVelocity();
                 const float angle = m_emitter->calculateAngle();
 
-                ParticleSettings settings{ m_particleLifetime, m_particleSize, m_particleSpeed, angle, m_particleRotationSpeed, m_startColor, m_endColor, m_isDrawTrail, m_trailSize, m_particleSizeCurve, m_rgbCurve, m_alphaCurve };
+                ParticleSettings settings{ m_particleLifetime, m_particleSize, m_particleSpeed, angle, m_particleRotationSpeed, m_force, m_particleMass, m_startColor, m_endColor, m_isDrawTrail, m_trailSize, m_particleSizeCurve, m_rgbCurve, m_alphaCurve };
                 m_particles.push_back({ position.x, position.y, settings });
                 m_particles.back().setVelocity(velocity * m_particleSpeed);
             }

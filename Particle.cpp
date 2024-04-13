@@ -13,6 +13,8 @@ Particle::Particle(float x, float y, const ParticleSettings& settings) :
 	m_easedColor(settings.startColor),
 	m_startLifeTime(settings.lifetime),
 	m_startParticleSize(settings.size),
+	m_force(settings.force),
+	m_particleMass(settings.particleMass),
 	m_rotationSpeed(settings.rotationSpeed),
 	m_isDrawTrail(settings.isDrawTrail),
 	m_trailSize(settings.trailSize),
@@ -32,6 +34,8 @@ Particle::Particle(const Particle& particle) :
 	m_easedColor(particle.m_startColor),
 	m_startLifeTime(particle.m_startLifeTime),
 	m_startParticleSize(particle.m_startParticleSize),
+	m_force(particle.m_force),
+	m_particleMass(particle.m_particleMass),
 	m_rotationSpeed(particle.m_rotationSpeed),
 	m_isDrawTrail(particle.m_isDrawTrail),
 	m_trailSize(particle.m_trailSize),
@@ -96,6 +100,11 @@ void Particle::update(float dt)
 		m_easedColor.a = static_cast<sf::Uint8>((1.0f - easingFactor) * m_startColor.a + easingFactor * m_endColor.a);
 	}
 
+	// Update velocity with force proportional to particle mass
+	// TODO Fuzzy Compare
+	if ((m_force.x != 0.0f) || (m_force.y != 0.0f))
+		m_velocity += m_force / (m_particleMass > 0.0f ? m_particleMass : 1.0f);
+
 	m_position += m_velocity * dt;
 }
 
@@ -110,6 +119,8 @@ void Particle::swap(Particle& particle) noexcept
 	std::swap(m_easedColor, particle.m_easedColor);
 	std::swap(m_startLifeTime, particle.m_startLifeTime);
 	std::swap(m_startParticleSize, particle.m_startParticleSize);
+	std::swap(m_force, particle.m_force);
+	std::swap(m_particleMass, particle.m_particleMass);
 	std::swap(m_rotationSpeed, particle.m_rotationSpeed);
 	std::swap(m_isDrawTrail, particle.m_isDrawTrail);
 	std::swap(m_trailSize, particle.m_trailSize);
