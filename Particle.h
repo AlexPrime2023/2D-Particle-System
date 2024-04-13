@@ -41,4 +41,6 @@ private:
     sf::Vector2f m_velocity;
     float m_lifetime;
     sf::Color m_color;
+
+    float m_rotationSpeed;
 };
