@@ -5,7 +5,7 @@
 
 #include "Particle.h"
 
-#include "Emitter.h"
+#include "Emitters/Emitter.h"
 
 class ParticleSystem
 {

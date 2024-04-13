@@ -3,7 +3,7 @@
 #include <SFML/Graphics/Color.hpp>
 #include <memory>
 
-#include "EasingCurves.h"
+#include "Curves/EasingCurves.h"
 
 struct ParticleSettings {
     float lifeTime;

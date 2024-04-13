@@ -2,9 +2,9 @@
 #include <SFML/Graphics/CircleShape.hpp>
 
 // TODO To another file
-#include "SphereEmitter.h"
-#include "ConeEmitter.h"
-#include "PlaneEmitter.h"
+#include "Emitters/SphereEmitter.h"
+#include "Emitters/ConeEmitter.h"
+#include "Emitters/PlaneEmitter.h"
 
 ParticleSystem::ParticleSystem(unsigned int maxParticles) :
     m_maxParticles(maxParticles),

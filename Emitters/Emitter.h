@@ -2,7 +2,7 @@
 
 #include <SFML/System/Vector2.hpp>
 #include <cmath>
-#include "MathUtils.h"
+#include "../MathUtils/MathUtils.h"
 
 class Emitter
 {

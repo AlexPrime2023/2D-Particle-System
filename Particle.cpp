@@ -1,6 +1,6 @@
 #include "Particle.h"
 
-#include "MathUtils.h"
+#include "MathUtils/MathUtils.h"
 #include <iostream>
 
 Particle::Particle(float x, float y, const ParticleSettings& settings) :
