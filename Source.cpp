@@ -15,8 +15,10 @@ int main()
 	particleSystem.setParticleSpeed(50.0f);
 	particleSystem.setParticleRotationSpeed(0.0f);
 
-	particleSystem.setDrawTrail(true);
-	particleSystem.setTrailSize(20);
+	//particleSystem.setDrawTrail(true);
+	//particleSystem.setTrailSize(20);
+
+	particleSystem.setEasingCurveParticleSize(std::move(std::make_shared<LinearEasing>(LinearEasing())));
 
 	particleSystem.setColor(sf::Color::Red);
 

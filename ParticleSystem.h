@@ -36,6 +36,8 @@ public:
 	inline void setDrawTrail(bool isDrawTrail) { m_isDrawTrail = isDrawTrail; }
 	inline void setTrailSize(int trailSize) { m_trailSize = trailSize; }
 
+	inline void setEasingCurveParticleSize(std::shared_ptr<EasingCurve> particleSizeCurve) { m_particleSizeCurve = std::move(particleSizeCurve); };
+
 private:
 	unsigned int m_maxParticles;
 
@@ -55,4 +57,6 @@ private:
 	int m_trailSize;
 
 	std::shared_ptr<Emitter> m_emitter;
+
+	std::shared_ptr<EasingCurve> m_particleSizeCurve;
 };

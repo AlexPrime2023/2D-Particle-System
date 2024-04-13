@@ -37,7 +37,7 @@ void ParticleSystem::update(float dt)
                 const sf::Vector2f velocity = m_emitter->calculateVelocity();
                 const float angle = m_emitter->calculateAngle();
 
-                ParticleSettings settings{ m_particleLifetime, m_particleSize, m_particleSpeed, angle, m_particleRotationSpeed, m_color, m_isDrawTrail, m_trailSize };
+                ParticleSettings settings{ m_particleLifetime, m_particleSize, m_particleSpeed, angle, m_particleRotationSpeed, m_color, m_isDrawTrail, m_trailSize, m_particleSizeCurve };
                 m_particles.push_back({ position.x, position.y, settings });
                 m_particles.back().setVelocity(velocity * m_particleSpeed);
             }
@@ -66,7 +66,7 @@ void ParticleSystem::draw(sf::RenderWindow& window) const
             }
         }
 
-        sf::CircleShape shape(m_particleSize);
+        sf::CircleShape shape(particle.size());
         shape.setFillColor(particle.color());
         shape.setPosition(particle.position());
         window.draw(shape);

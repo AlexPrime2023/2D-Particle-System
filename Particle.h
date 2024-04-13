@@ -32,6 +32,8 @@ public:
 
     inline sf::Vector2f position() const { return m_position; };
 
+    inline float size() const { return m_particleSize; };
+
     inline sf::Color color() const { return m_color; };
 
     inline int trailSize() const { return m_trail.size(); };
@@ -45,7 +47,11 @@ private:
     sf::Vector2f m_position;
     sf::Vector2f m_velocity;
     float m_lifetime;
+    float m_particleSize;
     sf::Color m_color;
+
+    float m_startLifeTime;
+    float m_startParticleSize;
 
     float m_rotationSpeed;
 
@@ -53,4 +59,6 @@ private:
     int m_trailSize;
 
     std::vector<sf::Vector2f> m_trail;
+
+    std::shared_ptr<EasingCurve> m_particleSizeCurve;
 };

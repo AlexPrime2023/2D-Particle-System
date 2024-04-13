@@ -7,10 +7,14 @@ Particle::Particle(float x, float y, const ParticleSettings& settings) :
 	m_position(x, y),
 	m_velocity(settings.speed* std::cos(settings.angle), settings.speed* std::sin(settings.angle)),
 	m_lifetime(settings.lifetime),
+	m_particleSize(settings.size),
 	m_color(settings.color),
+	m_startLifeTime(settings.lifetime),
+	m_startParticleSize(settings.size),
 	m_rotationSpeed(settings.rotationSpeed),
 	m_isDrawTrail(settings.isDrawTrail),
-	m_trailSize(settings.trailSize)
+	m_trailSize(settings.trailSize),
+	m_particleSizeCurve(settings.particleSizeCurve)
 {
 }
 
@@ -18,10 +22,14 @@ Particle::Particle(const Particle& particle) :
 	m_position(particle.m_position),
 	m_velocity(particle.m_velocity),
 	m_lifetime(particle.m_lifetime),
+	m_particleSize(particle.m_particleSize),
 	m_color(particle.m_color),
+	m_startLifeTime(particle.m_startLifeTime),
+	m_startParticleSize(particle.m_startParticleSize),
 	m_rotationSpeed(particle.m_rotationSpeed),
 	m_isDrawTrail(particle.m_isDrawTrail),
-	m_trailSize(particle.m_trailSize)
+	m_trailSize(particle.m_trailSize),
+	m_particleSizeCurve(particle.m_particleSizeCurve)
 {
 }
 
@@ -54,6 +62,15 @@ void Particle::update(float dt)
 	float angle = std::atan2(m_velocity.y, m_velocity.x) + m_rotationSpeed * dt;
 	m_velocity = sf::Vector2f(std::cos(angle), std::sin(angle)) * std::sqrt(m_velocity.x * m_velocity.x + m_velocity.y * m_velocity.y);
 
+	if (m_particleSizeCurve)
+	{
+		// Updating the Particle's Direction Using a Curve
+		// Time progression from 0 to 1
+		float t = 1.0f - (m_lifetime / m_startLifeTime);
+		float easingFactor = m_particleSizeCurve->interpolate(t);
+		m_particleSize = m_startParticleSize * easingFactor;
+	}
+
 	m_position += m_velocity * dt;
 }
 
@@ -62,8 +79,13 @@ void Particle::swap(Particle& particle) noexcept
 	std::swap(m_position, particle.m_position);
 	std::swap(m_velocity, particle.m_velocity);
 	std::swap(m_lifetime, particle.m_lifetime);
+	std::swap(m_particleSize, particle.m_particleSize);
+	std::swap(m_color, particle.m_color);
+	std::swap(m_startLifeTime, particle.m_startLifeTime);
+	std::swap(m_startParticleSize, particle.m_startParticleSize);
 	std::swap(m_color, particle.m_color);
 	std::swap(m_rotationSpeed, particle.m_rotationSpeed);
 	std::swap(m_isDrawTrail, particle.m_isDrawTrail);
 	std::swap(m_trailSize, particle.m_trailSize);
+	std::swap(m_particleSizeCurve, particle.m_particleSizeCurve);
 }
