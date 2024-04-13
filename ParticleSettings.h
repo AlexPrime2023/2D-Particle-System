@@ -6,7 +6,7 @@
 #include "EasingCurves.h"
 
 struct ParticleSettings {
-    float lifetime;
+    float lifeTime;
     float size;
     float speed;
     float angle;
@@ -22,8 +22,8 @@ struct ParticleSettings {
     std::shared_ptr<EasingCurve> alphaCurve;
     std::shared_ptr<EasingCurve> forceCurve;
 
-    ParticleSettings(float lifetime, float size, float speed, float angle, float rotationSpeed, sf::Vector2f force, float particleMass, const sf::Color& startColor, const sf::Color& endColor, bool isDrawTrail, int trailSize, std::shared_ptr<EasingCurve> particleSizeCurve, std::shared_ptr<EasingCurve> rgbCurve, std::shared_ptr<EasingCurve> alphaCurve, std::shared_ptr<EasingCurve> forceCurve)
-        : lifetime(lifetime),
+    ParticleSettings(float lifeTime, float size, float speed, float angle, float rotationSpeed, sf::Vector2f force, float particleMass, const sf::Color& startColor, const sf::Color& endColor, bool isDrawTrail, int trailSize, std::shared_ptr<EasingCurve> particleSizeCurve, std::shared_ptr<EasingCurve> rgbCurve, std::shared_ptr<EasingCurve> alphaCurve, std::shared_ptr<EasingCurve> forceCurve)
+        : lifeTime(lifeTime),
         size(size),
         speed(speed),
         angle(angle),

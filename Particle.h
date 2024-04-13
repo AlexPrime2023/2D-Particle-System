@@ -23,8 +23,8 @@ public:
     void update(float dt);
 
 public:
-    inline bool isAlive() const { return m_lifetime > 0.0f; };
-    inline bool isDrawTail() const { return m_isDrawTrail; };
+    inline bool isAlive() const { return m_particleSettings.lifeTime > 0.0f; };
+    inline bool isDrawTail() const { return m_particleSettings.isDrawTrail; };
 
 public:
     inline sf::Vector2f velocity() const { return m_velocity; };
@@ -32,7 +32,7 @@ public:
 
     inline sf::Vector2f position() const { return m_position; };
 
-    inline float size() const { return m_particleSize; };
+    inline float size() const { return m_particleSettings.size; };
 
     inline sf::Color color() const { return m_easedColor; };
 
@@ -46,29 +46,14 @@ private:
 private:
     sf::Vector2f m_position;
     sf::Vector2f m_velocity;
-    float m_lifetime;
-    float m_particleSize;
-
-    sf::Color m_startColor;
-    sf::Color m_endColor;
-    sf::Color m_easedColor;
-
-    sf::Vector2f m_force;
-    float m_particleMass;
 
     float m_startLifeTime;
     float m_startParticleSize;
     sf::Vector2f m_startForce;
 
-    float m_rotationSpeed;
-
-    bool m_isDrawTrail;
-    int m_trailSize;
+    sf::Color m_easedColor;
 
     std::vector<sf::Vector2f> m_trail;
 
-    std::shared_ptr<EasingCurve> m_particleSizeCurve;
-    std::shared_ptr<EasingCurve> m_rgbCurve;
-    std::shared_ptr<EasingCurve> m_alphaCurve;
-    std::shared_ptr<EasingCurve> m_forceCurve;
+    ParticleSettings m_particleSettings;
 };

@@ -5,47 +5,23 @@
 
 Particle::Particle(float x, float y, const ParticleSettings& settings) :
 	m_position(x, y),
-	m_velocity(settings.speed* std::cos(settings.angle), settings.speed* std::sin(settings.angle)),
-	m_lifetime(settings.lifetime),
-	m_particleSize(settings.size),
-	m_startColor(settings.startColor),
-	m_endColor(settings.endColor),
-	m_easedColor(settings.startColor),
-	m_startLifeTime(settings.lifetime),
+	m_velocity(settings.speed * std::cos(settings.angle), settings.speed * std::sin(settings.angle)),
+	m_startLifeTime(settings.lifeTime),
 	m_startParticleSize(settings.size),
 	m_startForce(settings.force),
-	m_force(settings.force),
-	m_particleMass(settings.particleMass),
-	m_rotationSpeed(settings.rotationSpeed),
-	m_isDrawTrail(settings.isDrawTrail),
-	m_trailSize(settings.trailSize),
-	m_particleSizeCurve(settings.particleSizeCurve),
-	m_rgbCurve(settings.rgbCurve),
-	m_alphaCurve(settings.alphaCurve),
-	m_forceCurve(settings.forceCurve)
+	m_easedColor(settings.startColor),
+	m_particleSettings(settings)
 {
 }
 
 Particle::Particle(const Particle& particle) :
 	m_position(particle.m_position),
 	m_velocity(particle.m_velocity),
-	m_lifetime(particle.m_lifetime),
-	m_particleSize(particle.m_particleSize),
-	m_startColor(particle.m_startColor),
-	m_endColor(particle.m_endColor),
-	m_easedColor(particle.m_startColor),
 	m_startLifeTime(particle.m_startLifeTime),
 	m_startParticleSize(particle.m_startParticleSize),
 	m_startForce(particle.m_startForce),
-	m_force(particle.m_force),
-	m_particleMass(particle.m_particleMass),
-	m_rotationSpeed(particle.m_rotationSpeed),
-	m_isDrawTrail(particle.m_isDrawTrail),
-	m_trailSize(particle.m_trailSize),
-	m_particleSizeCurve(particle.m_particleSizeCurve),
-	m_rgbCurve(particle.m_rgbCurve),
-	m_alphaCurve(particle.m_alphaCurve),
-	m_forceCurve(particle.m_forceCurve)
+	m_easedColor(particle.m_easedColor),
+	m_particleSettings(particle.m_particleSettings)
 {
 }
 
@@ -62,58 +38,58 @@ Particle& Particle::operator=(const Particle& particle)
 
 void Particle::update(float dt)
 {
-	if (m_isDrawTrail)
+	if (m_particleSettings.isDrawTrail)
 	{
 		m_trail.push_back(m_position);
 
 		// Limit the trail size
-		if (m_trail.size() > m_trailSize) {
+		if (m_trail.size() > m_particleSettings.trailSize) {
 			m_trail.erase(m_trail.begin());
 		}
 	}
 
-	m_lifetime -= dt;
+	m_particleSettings.lifeTime -= dt;
 
 	// Update the particle rotation angle
-	float angle = std::atan2(m_velocity.y, m_velocity.x) + m_rotationSpeed * dt;
+	float angle = std::atan2(m_velocity.y, m_velocity.x) + m_particleSettings.rotationSpeed * dt;
 	m_velocity = sf::Vector2f(std::cos(angle), std::sin(angle)) * std::sqrt(m_velocity.x * m_velocity.x + m_velocity.y * m_velocity.y);
 
-	if (m_particleSizeCurve)
+	if (m_particleSettings.particleSizeCurve)
 	{
 		// Updating the Particle's Direction Using a Curve
 		// Time progression from 0 to 1
-		float t = 1.0f - (m_lifetime / m_startLifeTime);
-		float easingFactor = m_particleSizeCurve->interpolate(t);
-		m_particleSize = m_startParticleSize * easingFactor;
+		float t = 1.0f - (m_particleSettings.lifeTime / m_startLifeTime);
+		float easingFactor = m_particleSettings.particleSizeCurve->interpolate(t);
+		m_particleSettings.size = m_startParticleSize * easingFactor;
 	}
 
-	if (m_rgbCurve)
+	if (m_particleSettings.rgbCurve)
 	{
-		float t = 1.0f - (m_lifetime / m_startLifeTime);
-		float easingFactor = m_rgbCurve->interpolate(t);
+		float t = 1.0f - (m_particleSettings.lifeTime / m_startLifeTime);
+		float easingFactor = m_particleSettings.rgbCurve->interpolate(t);
 
-		m_easedColor.r = static_cast<sf::Uint8>((1.0f - easingFactor) * m_startColor.r + easingFactor * m_endColor.r);
-		m_easedColor.g = static_cast<sf::Uint8>((1.0f - easingFactor) * m_startColor.g + easingFactor * m_endColor.g);
-		m_easedColor.b = static_cast<sf::Uint8>((1.0f - easingFactor) * m_startColor.b + easingFactor * m_endColor.b);
+		m_easedColor.r = static_cast<sf::Uint8>((1.0f - easingFactor) * m_particleSettings.startColor.r + easingFactor * m_particleSettings.endColor.r);
+		m_easedColor.g = static_cast<sf::Uint8>((1.0f - easingFactor) * m_particleSettings.startColor.g + easingFactor * m_particleSettings.endColor.g);
+		m_easedColor.b = static_cast<sf::Uint8>((1.0f - easingFactor) * m_particleSettings.startColor.b + easingFactor * m_particleSettings.endColor.b);
 	}
 
-	if (m_alphaCurve)
+	if (m_particleSettings.alphaCurve)
 	{
-		float t = 1.0f - (m_lifetime / m_startLifeTime);
-		float easingFactor = m_alphaCurve->interpolate(t);
-		m_easedColor.a = static_cast<sf::Uint8>((1.0f - easingFactor) * m_startColor.a + easingFactor * m_endColor.a);
+		float t = 1.0f - (m_particleSettings.lifeTime / m_startLifeTime);
+		float easingFactor = m_particleSettings.alphaCurve->interpolate(t);
+		m_easedColor.a = static_cast<sf::Uint8>((1.0f - easingFactor) * m_particleSettings.startColor.a + easingFactor * m_particleSettings.endColor.a);
 	}
 
-	if (m_forceCurve)
+	if (m_particleSettings.forceCurve)
 	{
-		float t = 1.0f - (m_lifetime / m_startLifeTime);
-		float easingFactor = m_forceCurve->interpolate(t);
-		m_force = m_startForce * easingFactor;
+		float t = 1.0f - (m_particleSettings.lifeTime / m_startLifeTime);
+		float easingFactor = m_particleSettings.forceCurve->interpolate(t);
+		m_particleSettings.force = m_startForce * easingFactor;
 	}
 
 	// Update velocity with force proportional to particle mass
-	if (MathUtils::isNumbersAreSameFuzzyCompare(m_force.x, 0.0f) || MathUtils::isNumbersAreSameFuzzyCompare(m_force.y, 0.0f))
-		m_velocity += m_force / (m_particleMass > 0.0f ? m_particleMass : 1.0f);
+	if (MathUtils::isNumbersAreSameFuzzyCompare(m_particleSettings.force.x, 0.0f) || MathUtils::isNumbersAreSameFuzzyCompare(m_particleSettings.force.y, 0.0f))
+		m_velocity += m_particleSettings.force / (m_particleSettings.particleMass > 0.0f ? m_particleSettings.particleMass : 1.0f);
 
 	m_position += m_velocity * dt;
 }
@@ -122,21 +98,10 @@ void Particle::swap(Particle& particle) noexcept
 {
 	std::swap(m_position, particle.m_position);
 	std::swap(m_velocity, particle.m_velocity);
-	std::swap(m_lifetime, particle.m_lifetime);
-	std::swap(m_particleSize, particle.m_particleSize);
-	std::swap(m_startColor, particle.m_startColor);
-	std::swap(m_endColor, particle.m_endColor);
-	std::swap(m_easedColor, particle.m_easedColor);
 	std::swap(m_startLifeTime, particle.m_startLifeTime);
 	std::swap(m_startParticleSize, particle.m_startParticleSize);
 	std::swap(m_startForce, particle.m_startForce);
-	std::swap(m_force, particle.m_force);
-	std::swap(m_particleMass, particle.m_particleMass);
-	std::swap(m_rotationSpeed, particle.m_rotationSpeed);
-	std::swap(m_isDrawTrail, particle.m_isDrawTrail);
-	std::swap(m_trailSize, particle.m_trailSize);
-	std::swap(m_particleSizeCurve, particle.m_particleSizeCurve);
-	std::swap(m_rgbCurve, particle.m_rgbCurve);
-	std::swap(m_alphaCurve, particle.m_alphaCurve);
-	std::swap(m_forceCurve, particle.m_forceCurve);
+	std::swap(m_easedColor, particle.m_easedColor);
+	std::swap(m_trail, particle.m_trail);
+	std::swap(m_particleSettings, particle.m_particleSettings);
 }
