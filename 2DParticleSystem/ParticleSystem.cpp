@@ -60,7 +60,7 @@ void ParticleSystem::draw(sf::RenderWindow& window) const
     for (const auto& particle : m_particles)
     {
         if (particle.isDrawTail() && particle.trailSize() > 1) {
-            for (size_t i = 1; i < particle.trailSize(); ++i) {
+            for (int i = 1; i < particle.trailSize(); ++i) {
                 sf::Vertex line[] = {
                     sf::Vertex(particle.trailIndex(i - 1), particle.color()),
                     sf::Vertex(particle.trailIndex(i), particle.color())
