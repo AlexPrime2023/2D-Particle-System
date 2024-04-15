@@ -1,7 +1,6 @@
 #include "Particle.h"
 
 #include "MathUtils/MathUtils.h"
-#include <iostream>
 
 Particle::Particle(float x, float y, const ParticleSettings& settings) :
 	m_position(x, y),
@@ -35,6 +34,32 @@ Particle& Particle::operator=(const Particle& particle)
 		swap(copyParticle);
 	}
 
+	return *this;
+}
+
+Particle::Particle(Particle&& particle) noexcept : 
+	m_position(std::move(particle.m_position)),
+	m_velocity(std::move(particle.m_velocity)),
+	m_startLifeTime(particle.m_startLifeTime),
+	m_startParticleSize(particle.m_startParticleSize),
+	m_startForce(std::move(particle.m_startForce)),
+	m_curveTime(particle.m_curveTime),
+	m_easedColor(particle.m_easedColor),
+	m_trail(std::move(particle.m_trail)),
+	m_particleSettings(std::move(particle.m_particleSettings))
+{
+	particle.m_startLifeTime = 0.0f;
+	particle.m_startParticleSize = 0.0f;
+	particle.m_curveTime = 0.0f;
+	particle.m_particleSettings.particleSizeCurve = nullptr;
+	particle.m_particleSettings.rgbCurve = nullptr;
+	particle.m_particleSettings.alphaCurve = nullptr;
+	particle.m_particleSettings.forceCurve = nullptr;
+}
+
+Particle& Particle::operator=(Particle&& particle) noexcept
+{
+	swap(particle);
 	return *this;
 }
 

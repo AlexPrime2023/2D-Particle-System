@@ -15,9 +15,8 @@ public:
     Particle(const Particle& particle);
     Particle& operator=(const Particle& particle);
 
-    // Doesn't make sense since primitive types
-    Particle(Particle&& particle) noexcept = default;
-    Particle& operator=(Particle&& particle) noexcept = default;
+    Particle(Particle&& particle) noexcept;
+    Particle& operator=(Particle&& particle) noexcept;
 
 public:
     void update(float dt);
