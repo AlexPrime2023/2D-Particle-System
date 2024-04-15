@@ -113,7 +113,7 @@ void Particle::update(float dt)
 	}
 
 	// Update velocity with force proportional to particle mass
-	if (MathUtils::isNumbersAreSameFuzzyCompare(m_particleSettings.force.x, 0.0f) || MathUtils::isNumbersAreSameFuzzyCompare(m_particleSettings.force.y, 0.0f))
+	if (!MathUtils::isNumbersAreSameFuzzyCompare(m_particleSettings.force.x, 0.0f) || !MathUtils::isNumbersAreSameFuzzyCompare(m_particleSettings.force.y, 0.0f))
 		m_velocity += m_particleSettings.force / (m_particleSettings.particleMass > 0.0f ? m_particleSettings.particleMass : 1.0f);
 
 	m_position += m_velocity * dt;
